@@ -1,0 +1,72 @@
+<%- include('../partials/header') %>
+
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+            <h1 class="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-pen-to-square text-primary-600"></i> Edit Barang
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">Perbarui informasi barang #<%= barang.id_barang %>.</p>
+        </div>
+
+        <div class="p-6">
+            <form action="/barang/edit/<%= barang.id_barang %>" method="POST" class="space-y-6">
+                <div>
+                    <label for="nama_barang" class="block text-sm font-medium text-slate-700">Nama Barang <span
+                            class="text-red-500">*</span></label>
+                    <div class="mt-1">
+                        <input type="text" id="nama_barang" name="nama_barang" value="<%= barang.nama_barang %>"
+                            required
+                            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="stok" class="block text-sm font-medium text-slate-700">Jumlah Stok <span
+                            class="text-red-500">*</span></label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input type="number" id="stok" name="stok" value="<%= barang.stok %>" required min="0"
+                            class="block w-full rounded-md border-slate-300 focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span class="text-slate-500 sm:text-sm">Unit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="jenis_barang" class="block text-sm font-medium text-slate-700">Jenis Barang <span
+                            class="text-red-500">*</span></label>
+                    <div class="mt-1">
+                        <select id="jenis_barang" name="jenis_barang" required
+                            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border">
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="Elektronik" <%=barang.jenis_barang==='Elektronik' ? 'selected' : '' %>
+                                >Elektronik</option>
+                            <option value="Aksesoris" <%=barang.jenis_barang==='Aksesoris' ? 'selected' : '' %>
+                                >Aksesoris</option>
+                            <option value="Furniture" <%=barang.jenis_barang==='Furniture' ? 'selected' : '' %>
+                                >Furniture</option>
+                            <option value="Alat Tulis" <%=barang.jenis_barang==='Alat Tulis' ? 'selected' : '' %>>Alat
+                                Tulis</option>
+                            <option value="Konsumsi" <%=barang.jenis_barang==='Konsumsi' ? 'selected' : '' %>>Konsumsi
+                            </option>
+                            <option value="Lainnya" <%=barang.jenis_barang==='Lainnya' ? 'selected' : '' %>>Lainnya
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-slate-100">
+                    <a href="/barang"
+                        class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                        <i class="fa-solid fa-xmark mr-2"></i> Batal
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                        <i class="fa-solid fa-save mr-2"></i> Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

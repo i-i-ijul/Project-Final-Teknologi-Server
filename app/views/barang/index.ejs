@@ -1,0 +1,139 @@
+<%- include('../partials/header') %>
+
+    <div
+        class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl shadow-slate-200/50 border border-white overflow-hidden">
+        <!-- Header Section -->
+        <div
+            class="px-8 py-6 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-white flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold font-display text-slate-800 flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-200">
+                        <i class="fa-solid fa-boxes-stacked text-lg"></i>
+                    </div>
+                    Daftar Barang
+                </h1>
+                <p class="text-sm text-slate-500 mt-2 ml-14">Kelola stok dan data inventaris gudang.</p>
+            </div>
+            <a href="/barang/create"
+                class="group inline-flex items-center px-5 py-2.5 rounded-full shadow-lg shadow-indigo-200 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all duration-200">
+                <i class="fa-solid fa-plus mr-2 group-hover:rotate-90 transition-transform duration-300"></i> Tambah
+                Barang
+            </a>
+        </div>
+
+        <!-- Table Section -->
+        <div class="overflow-x-auto">
+            <% if (barang.length===0) { %>
+                <div class="text-center py-20 px-4">
+                    <div
+                        class="bg-slate-50 border border-slate-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <i class="fa-solid fa-box-open text-slate-300 text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 font-display">Belum ada barang</h3>
+                    <p class="text-slate-500 max-w-sm mx-auto mb-8">Data inventaris masih kosong. Mulai dengan
+                        menambahkan barang baru ke dalam sistem.</p>
+                    <a href="/barang/create"
+                        class="inline-flex items-center px-6 py-3 rounded-full shadow-lg shadow-indigo-100 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all">
+                        Tambah barang pertama
+                    </a>
+                </div>
+                <% } else { %>
+                    <table class="min-w-full divide-y divide-indigo-50">
+                        <thead class="bg-indigo-50/50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-8 py-4 text-left text-xs font-bold text-indigo-900 uppercase tracking-wider font-display rounded-tl-xl ml-4">
+                                    ID</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-indigo-900 uppercase tracking-wider font-display">
+                                    Nama Barang</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-indigo-900 uppercase tracking-wider font-display">
+                                    Stok</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-indigo-900 uppercase tracking-wider font-display">
+                                    Jenis</th>
+                                <th scope="col"
+                                    class="px-8 py-4 text-right text-xs font-bold text-indigo-900 uppercase tracking-wider font-display rounded-tr-xl">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-indigo-50 bg-white">
+                            <% barang.forEach(item=> { %>
+                                <tr class="hover:bg-indigo-50/30 transition-colors group">
+                                    <td class="px-8 py-5 whitespace-nowrap text-sm font-bold text-indigo-600">
+                                        #<%= item.id_barang %>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-slate-700 font-medium">
+                                        <%= item.nama_barang %>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm">
+                                        <% if (item.stok < 10) { %>
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-600 border border-rose-100">
+                                                <i class="fa-solid fa-circle-exclamation text-[10px]"></i>
+                                                <%= item.stok %> (Low)
+                                            </span>
+                                            <% } else { %>
+                                                <span
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-600 border border-teal-100">
+                                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                                    <%= item.stok %> Unit
+                                                </span>
+                                                <% } %>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-slate-600">
+                                        <span
+                                            class="bg-slate-100 text-slate-600 px-3 py-1 rounded-lg text-xs font-medium border border-slate-200">
+                                            <%= item.jenis_barang %>
+                                        </span>
+                                    </td>
+                                    <td class="px-8 py-5 whitespace-nowrap text-right text-sm font-medium">
+                                        <div
+                                            class="flex justify-end items-center gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                            <a href="/barang/edit/<%= item.id_barang %>"
+                                                class="w-8 h-8 flex items-center justify-center rounded-lg text-amber-600 hover:text-amber-700 hover:bg-amber-50 transition-all border border-transparent hover:border-amber-100"
+                                                title="Edit">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <form action="/barang/delete/<%= item.id_barang %>" method="POST"
+                                                class="inline"
+                                                onsubmit="return confirmDelete('Hapus barang <%= item.nama_barang %>?')">
+                                                <button type="submit"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-all border border-transparent hover:border-rose-100 cursor-pointer"
+                                                    title="Hapus">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <div
+                        class="px-8 py-5 border-t border-indigo-50 bg-indigo-50/30 text-sm text-slate-500 flex justify-between items-center">
+                        <span>Menampilkan <strong>
+                                <%= barang.length %>
+                            </strong> total barang</span>
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1 rounded border border-slate-200 bg-white text-xs disabled:opacity-50"
+                                disabled>Previous</button>
+                            <button
+                                class="px-3 py-1 rounded border border-slate-200 bg-white text-xs disabled:opacity-50"
+                                disabled>Next</button>
+                        </div>
+                    </div>
+                    <% } %>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete(message) {
+            return confirm(message);
+        }
+    </script>
+
+    <%- include('../partials/footer') %>

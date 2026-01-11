@@ -1,0 +1,148 @@
+<%- include('../partials/header') %>
+
+    <div
+        class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl shadow-slate-200/50 border border-white overflow-hidden">
+        <!-- Header Section -->
+        <div
+            class="px-8 py-6 border-b border-purple-100 bg-gradient-to-r from-purple-50 to-white flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold font-display text-slate-800 flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-lg shadow-purple-200">
+                        <i class="fa-solid fa-users text-lg"></i>
+                    </div>
+                    Daftar Pengguna
+                </h1>
+                <p class="text-sm text-slate-500 mt-2 ml-14">Kelola akses dan data staff.</p>
+            </div>
+            <a href="/pengguna/create"
+                class="group inline-flex items-center px-5 py-2.5 rounded-full shadow-lg shadow-purple-200 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 hover:-translate-y-0.5 transition-all duration-200">
+                <i class="fa-solid fa-user-plus mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                Tambah Pengguna
+            </a>
+        </div>
+
+        <!-- Table Section -->
+        <div class="overflow-x-auto">
+            <% if (pengguna.length===0) { %>
+                <div class="text-center py-20 px-4">
+                    <div
+                        class="bg-slate-50 border border-slate-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 shadow-inner">
+                        <i class="fa-solid fa-users-slash text-slate-300 text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 font-display">Belum ada pengguna</h3>
+                    <p class="text-slate-500 max-w-sm mx-auto mb-8">Data pengguna masih kosong. Tambahkan staff baru
+                        untuk mulai.</p>
+                    <a href="/pengguna/create"
+                        class="inline-flex items-center px-6 py-3 rounded-full shadow-lg shadow-purple-100 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 hover:-translate-y-0.5 transition-all">
+                        Tambah pengguna pertama
+                    </a>
+                </div>
+                <% } else { %>
+                    <table class="min-w-full divide-y divide-purple-50">
+                        <thead class="bg-purple-50/50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-8 py-4 text-left text-xs font-bold text-purple-900 uppercase tracking-wider font-display rounded-tl-xl ml-4">
+                                    ID</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-purple-900 uppercase tracking-wider font-display">
+                                    Nama Pengguna</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-purple-900 uppercase tracking-wider font-display">
+                                    Barang Ditangani</th>
+                                <th scope="col"
+                                    class="px-6 py-4 text-left text-xs font-bold text-purple-900 uppercase tracking-wider font-display">
+                                    Jadwal Shift</th>
+                                <th scope="col"
+                                    class="px-8 py-4 text-right text-xs font-bold text-purple-900 uppercase tracking-wider font-display rounded-tr-xl">
+                                    Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-purple-50 bg-white">
+                            <% pengguna.forEach(item=> { %>
+                                <tr class="hover:bg-purple-50/30 transition-colors group">
+                                    <td class="px-8 py-5 whitespace-nowrap text-sm font-bold text-purple-600">
+                                        #<%= item.id_pengguna %>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-slate-700">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="h-9 w-9 rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 text-purple-600 flex items-center justify-center mr-3 text-xs font-bold border border-white shadow-sm ring-2 ring-purple-50">
+                                                <%= item.nama_pengguna.substring(0, 2).toUpperCase() %>
+                                            </div>
+                                            <span class="font-medium">
+                                                <%= item.nama_pengguna %>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-slate-600">
+                                        <% if (item.nama_barang) { %>
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                                                <i class="fa-solid fa-box text-[10px] text-slate-400"></i>
+                                                <%= item.nama_barang %>
+                                            </span>
+                                            <% } else { %>
+                                                <span class="text-slate-400 text-xs italic">Tidak ada</span>
+                                                <% } %>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-sm text-slate-600">
+                                        <% if (item.jadwal_shift) { %>
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-100">
+                                                <i class="fa-regular fa-clock text-[10px]"></i>
+                                                <%= item.jadwal_shift %>
+                                            </span>
+                                            <% } else { %>
+                                                <span class="text-slate-400">-</span>
+                                                <% } %>
+                                    </td>
+                                    <td class="px-8 py-5 whitespace-nowrap text-right text-sm font-medium">
+                                        <div
+                                            class="flex justify-end items-center gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                            <a href="/pengguna/edit/<%= item.id_pengguna %>"
+                                                class="w-8 h-8 flex items-center justify-center rounded-lg text-amber-600 hover:text-amber-700 hover:bg-amber-50 transition-all border border-transparent hover:border-amber-100"
+                                                title="Edit">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <form action="/pengguna/delete/<%= item.id_pengguna %>" method="POST"
+                                                class="inline"
+                                                onsubmit="return confirmDelete('Hapus pengguna <%= item.nama_pengguna %>?')">
+                                                <button type="submit"
+                                                    class="w-8 h-8 flex items-center justify-center rounded-lg text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-all border border-transparent hover:border-rose-100 cursor-pointer"
+                                                    title="Hapus">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <div
+                        class="px-8 py-5 border-t border-purple-50 bg-purple-50/30 text-sm text-slate-500 flex justify-between items-center">
+                        <span>Menampilkan <strong>
+                                <%= pengguna.length %>
+                            </strong> total pengguna</span>
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1 rounded border border-slate-200 bg-white text-xs disabled:opacity-50"
+                                disabled>Previous</button>
+                            <button
+                                class="px-3 py-1 rounded border border-slate-200 bg-white text-xs disabled:opacity-50"
+                                disabled>Next</button>
+                        </div>
+                    </div>
+                    <% } %>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete(message) {
+            return confirm(message);
+        }
+    </script>
+
+    <%- include('../partials/footer') %>

@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+    <div class="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+        <div class="rounded-full bg-red-100 p-4 mb-4">
+            <i class="fa-solid fa-triangle-exclamation text-red-500 text-4xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-slate-800">Terjadi Kesalahan</h1>
+
+        <div class="mt-4 w-full max-w-lg bg-red-50 border border-red-200 rounded-lg p-4 text-left">
+            <p class="text-red-800 font-medium">Detail Error:</p>
+            <p class="text-red-600 font-mono text-sm mt-1 break-all">
+                <%= error %>
+            </p>
+        </div>
+
+        <div class="mt-8 flex space-x-4">
+            <a href="/"
+                class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 transition-colors">
+                <i class="fa-solid fa-house mr-2"></i> Beranda
+            </a>
+            <button onclick="history.back()"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-slate-600 hover:bg-slate-700 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Kembali
+            </button>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>

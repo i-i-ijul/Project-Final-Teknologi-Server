@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+            <h1 class="text-xl font-semibold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-user-plus text-primary-600"></i> Tambah Pengguna Baru
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">Isi formulir di bawah ini untuk menambahkan pengguna baru.</p>
+        </div>
+
+        <div class="p-6">
+            <form action="/pengguna/create" method="POST" class="space-y-6">
+                <div>
+                    <label for="nama_pengguna" class="block text-sm font-medium text-slate-700">Nama Pengguna <span
+                            class="text-red-500">*</span></label>
+                    <div class="mt-1">
+                        <input type="text" id="nama_pengguna" name="nama_pengguna" required
+                            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border"
+                            placeholder="Contoh: Andi Prasetyo">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="id_barang" class="block text-sm font-medium text-slate-700">Barang yang Ditangani <span
+                            class="text-slate-400 font-normal">(Opsional)</span></label>
+                    <div class="mt-1">
+                        <select id="id_barang" name="id_barang"
+                            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border">
+                            <option value="">-- Pilih Barang --</option>
+                            <% barang.forEach(item=> { %>
+                                <option value="<%= item.id_barang %>">
+                                    <%= item.nama_barang %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="jadwal_shift" class="block text-sm font-medium text-slate-700">Jadwal Shift</label>
+                    <div class="mt-1">
+                        <select id="jadwal_shift" name="jadwal_shift"
+                            class="block w-full rounded-md border-slate-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm p-2.5 border">
+                            <option value="">-- Pilih Shift --</option>
+                            <option value="Pagi (08:00-16:00)">Pagi (08:00-16:00)</option>
+                            <option value="Siang (12:00-20:00)">Siang (12:00-20:00)</option>
+                            <option value="Malam (16:00-00:00)">Malam (16:00-00:00)</option>
+                            <option value="Full Time (08:00-17:00)">Full Time (08:00-17:00)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-slate-100">
+                    <a href="/pengguna"
+                        class="inline-flex items-center px-4 py-2 border border-slate-300 shadow-sm text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                        <i class="fa-solid fa-xmark mr-2"></i> Batal
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+                        <i class="fa-solid fa-save mr-2"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
